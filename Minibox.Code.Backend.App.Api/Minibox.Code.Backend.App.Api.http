@@ -1,0 +1,6 @@
+@Minibox.Code.Backend.App.Api_HostAddress = http://localhost:5001
+
+GET {{Minibox.Code.Backend.App.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
