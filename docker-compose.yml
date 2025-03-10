@@ -1,17 +1,46 @@
-version: '3.8'
 
 services:
-  api:
+  net8-api:
     container_name: minibox-api
     build:
-      context: ../
-      dockerfile: MiniboxStore/Minibox.Code.Backend.App.Api/Dockerfile
+      context: .
+      dockerfile: Minibox.Code.Backend.App.Api/Dockerfile
     ports:
-      - "5000:5000"
-      - "5001:5001"
+      - "5000:8080"  
+      - "5001:8081"  
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+    restart: unless-stopped
+    
+  blazor-admin-site:
+    container_name: minibox-admin-site
+    build:
+      context: .
+      dockerfile: Minibox.Code.Frontend.Admin.Site/Dockerfile
+    ports:
+      - "6000:8080"
+      - "6001:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - API_BASE_URL=http://api:5000
+    restart: unless-stopped
+    depends_on:
+      - net8-api
 
+  blazor-sales-site:
+    container_name: minibox-sales-site
+    build:
+      context: .
+      dockerfile: Minibox.Code.Frontend.Sales.Site/Dockerfile
+    ports:
+      - "7000:8080"
+      - "7001:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - API_BASE_URL=http://api:5000
+    restart: unless-stopped
+    depends_on:
+      - net8-api
 
 
 
