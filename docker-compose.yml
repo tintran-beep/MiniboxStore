@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: minibox-api
+    build:
+      context: ../
+      dockerfile: MiniboxStore/Minibox.Code.Backend.App.Api/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+
+
+
